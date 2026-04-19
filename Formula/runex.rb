@@ -31,6 +31,6 @@ class Runex < Formula
   end
 
   test do
-    assert_match "runex", shell_output("#{bin}/runex --version")
+    assert_match "runex", shell_output("#{bin}/runex version")
   end
 end
