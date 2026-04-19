@@ -15,6 +15,9 @@ on:
 permissions:
   contents: read
 
+env:
+  HOMEBREW_TAP_REPOSITORY: ${{ github.workspace }}/_tap
+
 jobs:
   test:
     name: ${{ matrix.os }}
@@ -28,15 +31,24 @@ jobs:
         with:
           persist-credentials: false
 
-      - name: Set up Homebrew
-        uses: Homebrew/actions/setup-homebrew@master
-
-      - name: Place checkout as local tap
+      - name: Compute tap path
+        id: tap
         run: |
-          TAP_DIR="$(brew --repository)/Library/Taps/shortarrow/homebrew-runex"
-          mkdir -p "$(dirname "$TAP_DIR")"
-          rm -rf "$TAP_DIR"
-          cp -R "$PWD" "$TAP_DIR"
+          if [[ "${RUNNER_OS}" == "macOS" ]]; then
+            if [[ "${RUNNER_ARCH}" == "ARM64" ]]; then
+              prefix=/opt/homebrew
+            else
+              prefix=/usr/local
+            fi
+          else
+            prefix=/home/linuxbrew/.linuxbrew
+          fi
+          echo "path=${prefix}/Library/Taps/shortarrow/homebrew-runex" >> "$GITHUB_OUTPUT"
+
+      - name: Set up Homebrew
+        uses: Homebrew/actions/setup-homebrew@main
+        env:
+          HOMEBREW_TAP_REPOSITORY: ${{ steps.tap.outputs.path }}
 
       - name: Install formula
         run: brew install shortarrow/runex/runex
