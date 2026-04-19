@@ -1,0 +1,40 @@
+name: test-formula
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'Formula/**.rb'
+      - '.github/workflows/test-formula.yml'
+  pull_request:
+    paths:
+      - 'Formula/**.rb'
+      - '.github/workflows/test-formula.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [macos-14, macos-13, ubuntu-24.04]
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
+
+      - name: Install formula
+        run: brew install --formula ./Formula/runex.rb
+
+      - name: brew test
+        run: brew test runex
+
+      - name: Smoke-test runex CLI
+        run: |
+          runex --version
+          runex doctor || true
