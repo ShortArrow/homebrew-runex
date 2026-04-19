@@ -31,8 +31,12 @@ jobs:
       - name: Set up Homebrew
         uses: Homebrew/actions/setup-homebrew@master
 
-      - name: Register tap from checkout
-        run: brew tap shortarrow/runex "$PWD"
+      - name: Place checkout as local tap
+        run: |
+          TAP_DIR="$(brew --repository)/Library/Taps/shortarrow/homebrew-runex"
+          mkdir -p "$(dirname "$TAP_DIR")"
+          rm -rf "$TAP_DIR"
+          cp -R "$PWD" "$TAP_DIR"
 
       - name: Install formula
         run: brew install shortarrow/runex/runex
