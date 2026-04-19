@@ -28,11 +28,14 @@ jobs:
         with:
           persist-credentials: false
 
+      - name: Register tap from checkout
+        run: brew tap shortarrow/runex "$PWD"
+
       - name: Install formula
-        run: brew install --formula ./Formula/runex.rb
+        run: brew install shortarrow/runex/runex
 
       - name: brew test
-        run: brew test runex
+        run: brew test shortarrow/runex/runex
 
       - name: Smoke-test runex CLI
         run: |
