@@ -1,28 +1,28 @@
 class Runex < Formula
   desc "Cross-shell abbreviation engine that expands short tokens into full commands"
   homepage "https://github.com/ShortArrow/runex"
-  version "0.1.19"
+  version "0.1.20"
   license any_of: ["MIT", "Apache-2.0"]
 
   on_macos do
     on_arm do
       url "https://github.com/ShortArrow/runex/releases/download/v#{version}/runex-aarch64-apple-darwin.tar.gz"
-      sha256 "b7a2a2a27afb8d4d767d4d10274ba63b545982e38c21e9cda7b9e0c1aeb8977c"
+      sha256 "09a08b6b9b8a5d72f0c9ff4bb38662820c50a523f6c506fed37034a723342fa8"
     end
     on_intel do
       url "https://github.com/ShortArrow/runex/releases/download/v#{version}/runex-x86_64-apple-darwin.tar.gz"
-      sha256 "07c8980cbc079ef4aa24db93d1a7624e3686f03107e97df620ae4e3205cabf1f"
+      sha256 "b2477f55348d3f8f597a3e324f29d408805f747d1a5e5dabf7809679f4513a5e"
     end
   end
 
   on_linux do
     on_arm do
       url "https://github.com/ShortArrow/runex/releases/download/v#{version}/runex-aarch64-unknown-linux-gnu.tar.gz"
-      sha256 "fb4d00b168e10f1797ba81c9e1b978531d5ebf3c6254d4febc4da1925f496008"
+      sha256 "985b888414f28dc82612c91a218542536f17e36bd8930d924e467a87aa41a611"
     end
     on_intel do
       url "https://github.com/ShortArrow/runex/releases/download/v#{version}/runex-x86_64-unknown-linux-gnu.tar.gz"
-      sha256 "589e29b617e2c9adf7a4e9878ac96b115a38617d99ef346a9857aea0fd8bf88c"
+      sha256 "de38b53b7747d926837cc1a4cf99fe9fbd85146e1b3a8e80f6010984393e677d"
     end
   end
 
